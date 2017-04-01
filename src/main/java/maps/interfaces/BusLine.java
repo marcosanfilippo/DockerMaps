@@ -1,5 +1,7 @@
 package maps.interfaces;
 
+import java.util.List;
+
 public interface BusLine {
 	
 	/**
@@ -11,10 +13,18 @@ public interface BusLine {
 		);
 	 */
 	
-	public Long getLine();
-	public void setLine(Long line);
+	public String getLine();
+	public void setLine(String line);
 	
-	public Long getDescription();
+	public String getDescription();
 	public void setDescription(String description);
-
+	
+	/***
+	 * Return SORTED (by time)!
+	 * @return
+	 */
+	public List<BusStop> getBusStops();
+	public void removeBusStop(BusStop busStop);
+	public void addBusStop(BusStop busStop);
+	
 }

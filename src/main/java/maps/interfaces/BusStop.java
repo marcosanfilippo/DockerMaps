@@ -1,5 +1,7 @@
 package maps.interfaces;
 
+import java.util.List;
+
 public interface BusStop {
 	
 	/**
@@ -14,16 +16,20 @@ public interface BusStop {
 
 	 */
 	
-	public Long getId();
-	public void setId(Long Id);
+	public String getId();
+	public void setId(String Id);
 	
-	public Long getName();
+	public String getName();
 	public void setName(String Name);
 	
-	public Long getLat();
+	public Double getLat();
 	public void setLat(Double Lat);
 	
-	public Long getLng();
+	public Double getLng();
 	public void setLng(Double Lng);
+	
+	public List<BusLine> getBusLines();
+	public void removeBusLine(BusLine busLine);
+	public void addBusLine(BusLine busLine);
 
 }

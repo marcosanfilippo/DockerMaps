@@ -2,5 +2,5 @@
 /*/
 *.orig
 !/src/
-
+!pom.xml
 !.gitignore
