@@ -54,11 +54,39 @@ else
 	    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(mymap);
 
-	//TODO: Fare in Query ajax 
 	<%
 	if ( bl != null )
 	{
 		%>
+		//TODO: Fare in Query ajax
+		/*
+		$.ajax({
+				type: "GET",
+				url: "getLineDetails.do?lineID=<%=request.getParameter("lineId")%>",
+				dataType: 'json',
+				success: function(data, textStatus, jqXHR)
+				{
+					latlngs=[];
+					$.each(data.stops,function(stop_index,stop)
+							{
+								msg = "Fermata <b>"+stop.name+"</b><br>";
+								$.each(stop.lines,function(line_index,line))
+								{
+									msg += "Linea <b>"+line.name+"</b> ("+line.description+")<br>";
+								}
+								L.marker([stop.lat,stop.lng ]).addTo(mymap)
+									.bindPopup(msg);
+								latlngs.push(L.latLng(stop.lat,stop.lng));
+							});
+					polyline = L.polyline(latlngs, {color: 'red'}).addTo(mymap);
+					mymap.fitBounds(polyline.getBounds());
+				},
+				error: function (jqXHR, textStatus, errorThrown)
+				{
+					//switch(jqXHR.status)
+				}
+		});
+			*/
 		latlngs=[];
 		<%
 		for(BusStop bs : bl.getBusStops())
