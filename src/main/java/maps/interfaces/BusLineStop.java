@@ -1,29 +1,25 @@
 package maps.interfaces;
 
+
 public interface BusLineStop {
 	
-	/**
-	 * 
-	 * create table if not exists BusLineStop (
-		  stopId varchar(20) not null,
-		  lineId varchar(20) not null,
-		  seqenceNumber smallint not null,
-		  primary key(stopId, lineId),
-		  foreign key (stopId) references BusStop(id),
-		  foreign key (lineId) references BusLine(line)
-		);
-
+	/*
+	create table if not exists BusLineStop (
+			  stopId varchar(20) not null,
+			  lineId varchar(20) not null,
+			  seqenceNumber smallint not null,
+			  primary key(stopId, lineId),
+			  foreign key (stopId) references BusStop(id),
+			  foreign key (lineId) references BusLine(line)
+	);
 	 */
 	
-	public Long getStopId();
-	public void setStopId(Long StopId);
+	public BusStop getBusStop();
+	public void setBusStop(BusStop bs ) throws Exception;
 	
-	public Long getLineId();
-	public void setLineId(Long LineId);
+	public BusLine getBusLine();
+	public void setBusLine(BusLine bl) throws Exception;
 	
-	public Long getSequenceNumber();
-	public void setSequenceNumber(Long SequenceNumber);
-	
-	
-
+	public Integer getSequenceNumber();
+	public void setSequenceNumber(Integer seq);
 }

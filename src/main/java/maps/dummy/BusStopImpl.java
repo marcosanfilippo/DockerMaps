@@ -3,7 +3,7 @@ package maps.dummy;
 import java.util.ArrayList;
 import java.util.List;
 
-import maps.interfaces.BusLine;
+import maps.interfaces.BusLineStop;
 import maps.interfaces.BusStop;
 
 public class BusStopImpl implements BusStop {
@@ -12,19 +12,19 @@ public class BusStopImpl implements BusStop {
 	private String name;
 	private Double lat;
 	private Double lng;
-	private List<BusLine> busLines;
+	private List<BusLineStop> busLineStops;
 	
-	public BusStopImpl(String id, String name, Double lat, Double lng, List<BusLine> _bl) {
+	public BusStopImpl(String id, String name, Double lat, Double lng, List<BusLineStop> _bl) throws Exception {
 		super();
 		this.id = new String(id);
 		this.name = new String(name);
 		this.lat = new Double(lat);
 		this.lng = new Double(lng);
-		this.busLines = new ArrayList<BusLine>();
+		this.busLineStops = new ArrayList<BusLineStop>();
 		
-		for(BusLine b : _bl)
+		for(BusLineStop b : _bl)
 		{
-			addBusLine(b);
+			addBusLineStop(b);
 		}
 	}
 	
@@ -69,22 +69,32 @@ public class BusStopImpl implements BusStop {
 	}
 
 	@Override
-	public List<BusLine> getBusLines() {
-		return new ArrayList<>(busLines);
+	public List<BusLineStop> getBusLineStops() {
+		return new ArrayList<>(busLineStops);
 	}
 
 	@Override
-	public void removeBusLine(BusLine busLine) {
-		if (! busLines.contains(busLine)) return;
-		busLines.remove(busLine);
-		busLine.removeBusStop(this);
+	public void removeBusLineStop(BusLineStop busLineStop) throws Exception {
+		if (! busLineStops.contains(busLineStop)) return;
+		busLineStops.remove(busLineStop);
+		
+		busLineStop.setBusStop(null);
+		if ( busLineStop.getBusLine() != null )
+		{
+			busLineStop.getBusLine().removeBusLineStop(busLineStop);
+		}
 	}
 
 	@Override
-	public void addBusLine(BusLine busLine) {
-		if (busLines.contains(busLine)) return;
-		busLines.add(busLine);
-		busLine.addBusStop(this);	
+	public void addBusLineStop(BusLineStop busLineStop) throws Exception {
+		if (busLineStops.contains(busLineStop)) return;
+		busLineStops.remove(busLineStop);
+		
+		busLineStop.setBusStop(this);
+		if ( busLineStop.getBusLine() != null )
+		{
+			busLineStop.getBusLine().addBusLineStop(busLineStop);
+		}	
 	}
 
 	/* (non-Javadoc)

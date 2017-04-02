@@ -27,9 +27,9 @@ public interface BusStop {
 	
 	public Double getLng();
 	public void setLng(Double Lng);
-	
-	public List<BusLine> getBusLines();
-	public void removeBusLine(BusLine busLine);
-	public void addBusLine(BusLine busLine);
+
+	public List<BusLineStop> getBusLineStops();
+	public void addBusLineStop(BusLineStop busLineStop) throws Exception;
+	public void removeBusLineStop(BusLineStop busLineStop) throws Exception;
 
 }

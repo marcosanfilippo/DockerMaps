@@ -1,9 +1,12 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="java.util.concurrent.ConcurrentHashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.Map.Entry"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="maps.interfaces.BusLine"%>
+<%@ page import="maps.interfaces.BusLineService"%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,9 +18,9 @@
 
 	<jsp:include page="partial/_navbar.jsp" />
 	
-	<%! @SuppressWarnings("unchecked") %>
 	<%
-		ConcurrentHashMap<String,BusLine> busLines = (ConcurrentHashMap<String,BusLine>) request.getServletContext().getAttribute("busLines");
+		BusLineService busLineService = (BusLineService) request.getServletContext().getAttribute("busLineService");
+		Map<String,BusLine> busLines = busLineService.getAll();
 	
 		for(Entry<String,BusLine> e : busLines.entrySet())
 		{

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="java.util.concurrent.ConcurrentHashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="maps.interfaces.BusStop"%>
 <%@page import="maps.interfaces.BusLine"%>
-
+<%@page import="maps.interfaces.BusLineStop"%>
+<%@page import="maps.interfaces.BusLineService"%>
 <%
 BusLine bl = null;
 if ( request.getParameter("lineId") == null)
@@ -12,18 +13,13 @@ if ( request.getParameter("lineId") == null)
 }
 else
 {
-	%>
-	<%! @SuppressWarnings("unchecked") %>
-	<%
-	ConcurrentHashMap<String,BusLine> busLines = (ConcurrentHashMap<String,BusLine>) request.getServletContext().getAttribute("busLines");
+	BusLineService busLineService = (BusLineService) request.getServletContext().getAttribute("busLineService");
+	bl = busLineService.getBusLine(request.getParameter("lineId"));
 	
-	bl = busLines.get(request.getParameter("lineId"));
 	if ( bl == null )
 	{
 		response.sendRedirect("index.jsp");
 	}
-	%>
-	<% 
 }
 %>
 <!DOCTYPE html>
@@ -89,17 +85,17 @@ else
 			*/
 		latlngs=[];
 		<%
-		for(BusStop bs : bl.getBusStops())
+		for(BusLineStop bs : bl.getBusStops())
 		{
-			String msg = "Fermata <b>"+bs.getName()+"</b><br>";
-			for(BusLine bsl : bs.getBusLines())
+			String msg = "Fermata <b>"+bs.getBusStop().getName()+"</b><br>";
+			for(BusLineStop bsl : bs.getBusStop().getBusLineStops())
 			{
-				msg += "Linea <b>"+bsl.getLine()+"</b> ("+bsl.getDescription()+")<br>";
+				msg += "Linea <b>"+bsl.getBusLine().getLine()+"</b> ("+bsl.getBusLine().getDescription()+")<br>";
 			}
 			%>
-			L.marker([<%=bs.getLat()%> ,<%= bs.getLng()%> ]).addTo(mymap)
+			L.marker([<%=bs.getBusStop().getLat()%> ,<%= bs.getBusStop().getLng()%> ]).addTo(mymap)
 				.bindPopup('<%=msg%>');
-			latlngs.push(L.latLng(<%=bs.getLat()%> ,<%= bs.getLng()%>));
+			latlngs.push(L.latLng(<%=bs.getBusStop().getLat()%> ,<%= bs.getBusStop().getLng()%>));
 			<%
 		}
 		%>
