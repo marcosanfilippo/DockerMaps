@@ -92,6 +92,7 @@ else
 			{
 				msg += "Linea <b>"+bsl.getBusLine().getLine()+"</b> ("+bsl.getBusLine().getDescription()+")<br>";
 			}
+			msg = msg.replace("'", "\\'");
 			%>
 			L.marker([<%=bs.getBusStop().getLat()%> ,<%= bs.getBusStop().getLng()%> ]).addTo(mymap)
 				.bindPopup('<%=msg%>');

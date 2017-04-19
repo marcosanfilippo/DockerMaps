@@ -1,6 +1,8 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.TreeMap"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="maps.interfaces.BusLine"%>
@@ -17,18 +19,24 @@
 <body>
 
 	<jsp:include page="partial/_navbar.jsp" />
-	
-	<%
-		BusLineService busLineService = (BusLineService) request.getServletContext().getAttribute("busLineService");
-		Map<String,BusLine> busLines = busLineService.getAll();
-	
-		for(Entry<String,BusLine> e : busLines.entrySet())
-		{
-			%>
-				<a href="maps.jsp?lineId=<%= e.getKey() %>"><%= e.getKey() %> : <%= e.getValue().getDescription() %></a><br>
+	<div class="container">
+		<div class="row">
+			<h3>Elenco</h3>
+			<br>
 			<%
-		}
-	%>
+				BusLineService busLineService = (BusLineService) request.getServletContext().getAttribute("busLineService");
+				Map<String,BusLine> busLines = new TreeMap<String,BusLine>(busLineService.getAll());
+			
+				for(Entry<String,BusLine> e : busLines.entrySet())
+				{
+					%>
+						Linea: <a href="maps.jsp?lineId=<%= e.getKey() %>"><%= e.getKey() %></a>, <%= e.getValue().getDescription() %>
+						<br>
+					<%
+				}
+			%>
+		</div>
+	</div>
 	
 </body>
 </html>
