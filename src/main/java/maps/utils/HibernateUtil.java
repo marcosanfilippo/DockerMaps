@@ -1,7 +1,4 @@
 package maps.utils;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -14,19 +11,12 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
     private static final SessionFactory sessionFactory = buildSessionFactory();
     private static SessionFactory buildSessionFactory() {
-        try {
-        	if (HibernateUtil.class.getResource("/passworddb.txt") == null)
-        	{
-        		throw new Exception("Dev password file: WEB-INF/classes/passworddb.txt not found");
-        	}
-        	
+        try {        	
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySetting(Environment.DRIVER,"org.postgresql.Driver")
-				//.applySetting(Environment.URL,"jdbc:postgresql://localhost:5432/trasporti")
-				.applySetting(Environment.URL,"jdbc:postgresql://vps.name29.net:5432/trasporti")
+				.applySetting(Environment.URL,"jdbc:postgresql://192.168.99.100:5432/trasporti")
 				.applySetting(Environment.USER,"postgres")
-				//.applySetting(Environment.PASS,"ai-user-password")
-				.applySetting(Environment.PASS,new String(Files.readAllBytes(Paths.get(HibernateUtil.class.getResource("/passworddb.txt").getFile())), StandardCharsets.UTF_8))
+				.applySetting(Environment.PASS,"ai-user-password")
 
 				.applySetting(Environment.POOL_SIZE,"10")
 				.applySetting(Environment.DIALECT,"org.hibernate.dialect.PostgreSQLDialect")
@@ -50,7 +40,7 @@ public class HibernateUtil {
             // Make sure you log the exception, as it might be swallowed
             System.err.println("Initial SessionFactory creation failed. " + ex);
             ex.printStackTrace();
-            throw new ExceptionInInitializerError(ex);
+            throw new ExceptionInInitializerError(ex); // IMPORTANT
         }
     }
     public static SessionFactory getSessionFactory() {
