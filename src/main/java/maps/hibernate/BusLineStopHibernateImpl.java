@@ -88,4 +88,41 @@ public class BusLineStopHibernateImpl implements BusLineStop {
 		sequence = new Short(seq.shortValue());
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((busLine == null) ? 0 : busLine.hashCode());
+		result = prime * result + ((busStop == null) ? 0 : busStop.hashCode());
+		result = prime * result + ((sequence == null) ? 0 : sequence.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BusLineStopHibernateImpl other = (BusLineStopHibernateImpl) obj;
+		if (busLine == null) {
+			if (other.busLine != null)
+				return false;
+		} else if (!busLine.equals(other.busLine))
+			return false;
+		if (busStop == null) {
+			if (other.busStop != null)
+				return false;
+		} else if (!busStop.equals(other.busStop))
+			return false;
+		if (sequence == null) {
+			if (other.sequence != null)
+				return false;
+		} else if (!sequence.equals(other.sequence))
+			return false;
+		return true;
+	}
+	
 }
