@@ -18,7 +18,7 @@ import maps.interfaces.BusLineStop;
 	create table if not exists BusLineStop (
 		  stopId varchar(20) not null,
 		  lineId varchar(20) not null,
-		  seqenceNumber smallint not null,
+		  sequenceNumber smallint not null,
 		  primary key(stopId, lineId),
 		  foreign key (stopId) references BusStop(id),
 		  foreign key (lineId) references BusLine(line)
